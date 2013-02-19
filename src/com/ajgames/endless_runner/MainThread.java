@@ -6,6 +6,8 @@ import android.graphics.Canvas;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
+import com.ajgames.endless_runner.controller.GameEngine;
+
 public class MainThread extends Thread
 {
 	private static final String TAG = MainThread.class.getSimpleName();
@@ -29,7 +31,7 @@ public class MainThread extends Thread
 	private double averageFps = 0.0;
 
 	private SurfaceHolder surfaceHolder;
-	private MainGamePanel gamePanel;
+	private GameEngine gameEngine;
 
 	// flag to hold game state
 	private boolean running;
@@ -39,11 +41,11 @@ public class MainThread extends Thread
 		this.running = running;
 	}
 
-	public MainThread( SurfaceHolder surfaceHolder, MainGamePanel gamePanel )
+	public MainThread( SurfaceHolder surfaceHolder, GameEngine gameEngine )
 	{
 		super();
 		this.surfaceHolder = surfaceHolder;
-		this.gamePanel = gamePanel;
+		this.gameEngine = gameEngine;
 	}
 
 	@Override
@@ -71,8 +73,8 @@ public class MainThread extends Thread
 					beginTime = System.currentTimeMillis();
 					framesSkipped = 0;
 
-					this.gamePanel.update();
-					this.gamePanel.render( canvas );
+					this.gameEngine.update();
+					this.gameEngine.render( canvas );
 
 					timeDiff = System.currentTimeMillis() - beginTime;
 					sleepTime = (int) ( FRAME_PERIOD - timeDiff );
@@ -89,7 +91,7 @@ public class MainThread extends Thread
 
 					while( sleepTime < 0 && framesSkipped < MAX_FRAME_SKIPS )
 					{
-						this.gamePanel.update();
+						this.gameEngine.update();
 						sleepTime += FRAME_PERIOD;
 						framesSkipped++;
 					}
@@ -108,6 +110,7 @@ public class MainThread extends Thread
 				{
 					surfaceHolder.unlockCanvasAndPost( canvas );
 				}
+
 			}
 			tickCount++;
 			// update game state
@@ -152,8 +155,8 @@ public class MainThread extends Thread
 
 			statusIntervalTimer = System.currentTimeMillis();
 			lastStatusStore = statusIntervalTimer;
-
-			gamePanel.setAvgFps( "FPS: " + df.format( averageFps ) );
+			
+			gameEngine.setAvgFps("FPS: " + df.format(averageFps));
 		}
 	}
 

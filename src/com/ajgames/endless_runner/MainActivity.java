@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
+import android.view.WindowManager;
+
+import com.ajgames.endless_runner.controller.GameEngine;
 
 public class MainActivity extends Activity
 {
@@ -15,11 +18,9 @@ public class MainActivity extends Activity
 	{
 		super.onCreate( savedInstanceState );
 		requestWindowFeature( Window.FEATURE_NO_TITLE );
-		/*
-		 * getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN,
-		 * WindowManager.LayoutParams.FLAG_FULLSCREEN );
-		 */
-		setContentView( new MainGamePanel( this ) );
+		getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN );
+		setContentView( new GameEngine( this ) );
 		Log.d( TAG, "View added" );
 	}
 

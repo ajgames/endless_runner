@@ -5,6 +5,7 @@ import org.jbox2d.dynamics.World;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -12,10 +13,8 @@ import android.view.SurfaceView;
 
 import com.ajgames.endless_runner.MainThread;
 import com.ajgames.endless_runner.model.Physics;
-import com.ajgames.endless_runner.model.Platform;
 import com.ajgames.endless_runner.model.Runner;
 import com.ajgames.endless_runner.view.IRenderer;
-import com.ajgames.endless_runner.view.PlatformRenderer;
 import com.ajgames.endless_runner.view.RunningGameRenderer;
 
 public class GameEngine extends SurfaceView implements
@@ -23,15 +22,14 @@ public class GameEngine extends SurfaceView implements
 {
 	private static final String TAG = GameEngine.class.getSimpleName();
 
+	private String avgFps;
+	
 	private World world;
 	private Runner runner;
-	private Platform platforms[];
 	
 	private IRenderer renderer;
 
 	private PlatformController platformController;
-
-	private PlatformRenderer platformRenderer;
 
 	private MainThread mainThread;
 
@@ -48,9 +46,9 @@ public class GameEngine extends SurfaceView implements
 		
 		this.runner = new Runner( this.world );
 		
-		this.platformController = new PlatformController( this.world, this.platforms );
+		this.platformController = new PlatformController( this.world );
 		
-		this.renderer = new RunningGameRenderer( this, this.platforms, this.runner );
+		this.renderer = new RunningGameRenderer( this, this.platformController.platforms, this.runner );
 
 		this.mainThread = new MainThread( this.getHolder(), this );
 	}
@@ -65,6 +63,7 @@ public class GameEngine extends SurfaceView implements
 	public void render( Canvas canvas )
 	{
 		this.renderer.render( canvas );
+		this.displayFps( canvas, avgFps );
 	}
 	
 	@Override
@@ -117,6 +116,21 @@ public class GameEngine extends SurfaceView implements
 			this.runner.jump();
 		}
 		return true;
+	}
+	
+	public void setAvgFps( String avgFps )
+	{
+		this.avgFps = avgFps;
+	}
+
+	private void displayFps( Canvas canvas, String fps )
+	{
+		if( canvas != null && fps != null )
+		{
+			Paint paint = new Paint();
+			paint.setARGB( 255, 255, 255, 255 );
+			canvas.drawText( fps, this.getWidth() - 50, 20, paint );
+		}
 	}
 	
 }

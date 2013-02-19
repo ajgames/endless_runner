@@ -1,4 +1,5 @@
-package com.ajgames.endless_runner;
+package com.ajgames.endless_runner.model;
+
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

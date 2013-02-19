@@ -1,8 +1,9 @@
-package com.ajgames.endless_runner;
+package com.ajgames.endless_runner.model;
 
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.World;
+
 
 public class Runner extends PhysicsSprite
 {
@@ -22,9 +23,9 @@ public class Runner extends PhysicsSprite
 
 	public void update()
 	{
-		if( this.x <= 0 && this.body.getLinearVelocity().x < 0 )
+		if( this.getX() <= 10 && this.getLinearVelocity().x < 0 )
 			this.body.applyForce( MOVE_RIGHT_VECTOR, this.body.getPosition() );
-		else if( this.x >= 350 && this.body.getLinearVelocity().x > 0 )
+		else if( this.getX() >= 310 && this.getLinearVelocity().x > 0 )
 			this.body.applyForce( MOVE_LEFT_VECTOR, this.body.getPosition() );
 	}
 

@@ -1,12 +1,12 @@
-package com.ajgames.endless_runner;
+package com.ajgames.endless_runner.controller;
 
 import java.util.Random;
 
 import org.jbox2d.dynamics.World;
 
-import android.graphics.Canvas;
+import com.ajgames.endless_runner.model.Platform;
 
-public class PlatformRenderer
+public class PlatformController
 {
 	private static final float MIN_SPEED = 4.0f;
 	private static final float MAX_SPEED = 5.0f;
@@ -19,11 +19,12 @@ public class PlatformRenderer
 	private static final int MIN_PLATFORM_HEIGHT = 10;
 	private static final int MAX_PLATFORM_HEIGHT = 2;
 	private static final int NUM_PLATFORMS = 10;
-
-	private World world;
+	
+	public Platform platforms[];
+	
 	private Random random;
-	private Platform[] platforms;
-
+	private World world;
+	
 	public float getRandomX()
 	{
 		return random.nextFloat() * ( MAX_START_X - MIN_START_X ) + MIN_START_X;
@@ -56,23 +57,38 @@ public class PlatformRenderer
 
 	protected boolean isOffScreen( Platform platform )
 	{
-		if( platform.body.getLinearVelocity().x < 0
-				&& platform.x + platform.width <= 0 )
+		if( platform.getLinearVelocity().x < 0
+				&& platform.getX() + platform.getWidth() <= 0 )
 			return true;
-		else if( platform.body.getLinearVelocity().x > 0 && platform.x >= 350 )
+		else if( platform.getLinearVelocity().x > 0 && platform.getX() >= 350 )
 			return true;
 		else
 			return false;
 	}
-
-	public PlatformRenderer( World world )
+	
+	public PlatformController( World world )
 	{
 		this.world = world;
+		this.platforms = new Platform[ NUM_PLATFORMS ];
 		this.random = new Random();
-		this.platforms = new Platform[NUM_PLATFORMS];
 		this.createPlatforms( world );
 	}
-
+	
+	public void update()
+	{
+		Platform platform;
+		for( int i = 0; i < NUM_PLATFORMS; i++ )
+		{
+			platform = this.platforms[ i ];
+			if( isOffScreen( platform ) )
+			{
+				platform.destroy();
+				platform = createPlatform( this.world );
+				platforms[ i ] = platform;
+			}
+		}
+	}
+	
 	private void createPlatforms( World world )
 	{
 		for( int i = 0; i < NUM_PLATFORMS; i++ )
@@ -88,26 +104,4 @@ public class PlatformRenderer
 				this.getRandomSpeed(), world );
 	}
 
-	public void update()
-	{
-		Platform platform;
-		for( int i = 0; i < NUM_PLATFORMS; i++ )
-		{
-			platform = this.platforms[ i ];
-			if( isOffScreen( platform ) )
-			{
-				platform.destroy();
-				platform = createPlatform( this.world );
-				platforms[ i ] = platform;
-			}
-		}
-	}
-
-	public void draw( Canvas canvas )
-	{
-		for( int i = 0; i < NUM_PLATFORMS; i++ )
-		{
-			this.platforms[ i ].draw( canvas );
-		}
-	}
 }

@@ -1,4 +1,4 @@
-package com.ajgames.endless_runner;
+package com.ajgames.endless_runner.model;
 
 import org.jbox2d.common.Vec2;
 

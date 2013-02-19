@@ -1,4 +1,4 @@
-package com.ajgames.endless_runner;
+package com.ajgames.endless_runner.model;
 
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
@@ -18,6 +18,31 @@ public class PhysicsSprite extends Sprite
 	protected BodyDef bodyDef;
 	protected World world;
 
+	@Override
+	public float getX()
+	{
+		return getPixelPosition().x;
+	}
+
+	@Override
+	public float getY()
+	{
+		return getPixelPosition().y;
+	}
+
+	@Override
+	public Rect getBounds()
+	{
+		return new Rect( (int) this.getX(), (int) this.getY(),
+				(int) this.getX() + this.getWidth(), (int) this.getY()
+						+ this.getHeight() );
+	}
+
+	public Vec2 getLinearVelocity()
+	{
+		return this.body.getLinearVelocity();
+	}
+	
 	protected Vec2 getPhysicsPosition()
 	{
 		Vec2 position = new Vec2( ( this.x + this.width * 0.5f )
@@ -72,15 +97,5 @@ public class PhysicsSprite extends Sprite
 		fd.restitution = restitution;
 
 		body.createFixture( fd );
-	}
-
-	public void draw( Canvas canvas )
-	{
-		Paint paint = new Paint();
-		Vec2 position = this.getPixelPosition();
-		this.x = position.x;
-		this.y = position.y;
-		canvas.drawRect( new Rect( (int) this.x, (int) this.y, (int) this.x
-				+ this.width, (int) this.y + this.height ), paint );
 	}
 }

@@ -1,6 +1,7 @@
-package com.ajgames.endless_runner;
+package com.ajgames.endless_runner.model;
 
 import android.graphics.Bitmap;
+import android.graphics.Rect;
 
 public class Sprite
 {
@@ -58,6 +59,12 @@ public class Sprite
 	public void setBitmap( Bitmap bitmap )
 	{
 		this.bitmap = bitmap;
+	}
+
+	public Rect getBounds()
+	{
+		return new Rect( (int) this.getX(), (int) this.getY(), (int) this.getX() + this.getWidth(),
+				(int) this.getY() + this.getHeight() );
 	}
 
 	public Sprite()
