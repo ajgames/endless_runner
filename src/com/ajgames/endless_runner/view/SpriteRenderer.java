@@ -7,7 +7,7 @@ import com.ajgames.endless_runner.model.Sprite;
 
 public class SpriteRenderer
 {
-	private Sprite sprite;
+	protected Sprite sprite;
 
 	public SpriteRenderer( Sprite sprite )
 	{
