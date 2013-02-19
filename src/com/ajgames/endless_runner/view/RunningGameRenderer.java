@@ -1,13 +1,13 @@
 package com.ajgames.endless_runner.view;
 
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.view.SurfaceHolder;
 
 import com.ajgames.endless_runner.controller.GameEngine;
 import com.ajgames.endless_runner.model.Platform;
 import com.ajgames.endless_runner.model.Runner;
+import com.example.endless_runner.R;
 
 public class RunningGameRenderer implements IRenderer
 {	
@@ -18,7 +18,7 @@ public class RunningGameRenderer implements IRenderer
 	public RunningGameRenderer( GameEngine gameEngine, Platform platforms[], Runner runner )
 	{
 		this.gameEngine = gameEngine;
-		this.runnerRenderer = new RunnerRenderer( runner );
+		this.runnerRenderer = new RunnerRenderer( runner, BitmapFactory.decodeResource( this.gameEngine.getResources(), R.drawable.droid ) );
 		this.platformRenderer = new PlatformRenderer( platforms );
 	}
 
