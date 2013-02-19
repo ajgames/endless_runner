@@ -11,17 +11,19 @@ public class BitmapRenderer extends SpriteRenderer
 {
 
 	private Bitmap bitmap;
-	
+
 	public BitmapRenderer( Sprite sprite, Bitmap bitmap )
 	{
 		super( sprite );
 		this.bitmap = bitmap;
 	}
-	
+
 	public void render( Canvas canvas )
 	{
 		Paint paint = new Paint();
-		canvas.drawBitmap( bitmap, new Matrix(), paint );
+		Matrix matrix = new Matrix();
+		matrix.postTranslate( this.sprite.getX(), this.sprite.getY() );
+		canvas.drawBitmap( bitmap, matrix, paint );
 	}
 
 }
