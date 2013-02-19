@@ -24,7 +24,6 @@
 package org.jbox2d.pooling.normal;
 
 import java.lang.reflect.Array;
-import java.util.logging.Logger;
 
 import org.jbox2d.pooling.IOrderedStack;
 

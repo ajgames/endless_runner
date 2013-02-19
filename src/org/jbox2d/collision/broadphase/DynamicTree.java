@@ -23,12 +23,13 @@
  ******************************************************************************/
 package org.jbox2d.collision.broadphase;
 
+import static org.jbox2d.collision.broadphase.DynamicTreeNode.NULL_NODE;
+
 import org.jbox2d.callbacks.DebugDraw;
 import org.jbox2d.callbacks.TreeCallback;
 import org.jbox2d.callbacks.TreeRayCastCallback;
 import org.jbox2d.collision.AABB;
 import org.jbox2d.collision.RayCastInput;
-import static org.jbox2d.collision.broadphase.DynamicTreeNode.NULL_NODE;
 import org.jbox2d.common.Color3f;
 import org.jbox2d.common.MathUtils;
 import org.jbox2d.common.Settings;
