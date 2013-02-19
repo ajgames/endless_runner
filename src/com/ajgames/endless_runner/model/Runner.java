@@ -18,7 +18,8 @@ public class Runner extends PhysicsSprite
 	{
 		super( 200.0f, 0.0f, 20, 20, world );
 		this.createBox( BodyType.DYNAMIC, Physics.DEFAULT_DENSITY,
-				Physics.DEFAULT_FRICTION, 0 );
+				Physics.DEFAULT_FRICTION, 0, true );
+		this.bodyDef.fixedRotation = true;
 	}
 
 	public void update()
