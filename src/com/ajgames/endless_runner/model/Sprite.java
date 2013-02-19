@@ -10,7 +10,18 @@ public class Sprite
 	protected float y;
 	protected int width;
 	protected int height;
+	protected float rotation;
 
+	public float getRotation()
+	{
+		return this.rotation;
+	}
+	
+	public void setRotation( float r )
+	{
+		this.rotation = r;
+	}
+	
 	public int getHeight()
 	{
 		return height;
@@ -69,7 +80,11 @@ public class Sprite
 
 	public Sprite()
 	{
-
+		this.rotation = 0;
+		this.x = 0.0f;
+		this.y = 0.0f;
+		this.width = 0;
+		this.height = 0;
 	}
 
 	public Sprite( float x, float y, int width, int height )
@@ -78,6 +93,7 @@ public class Sprite
 		this.y = y;
 		this.width = width;
 		this.height = height;
+		this.rotation = 0;
 	}
 
 }
