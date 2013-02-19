@@ -31,6 +31,12 @@ public class PhysicsSprite extends Sprite
 	}
 
 	@Override
+	public float getRotation()
+	{
+		return this.body.getAngle();
+	}
+	
+	@Override
 	public Rect getBounds()
 	{
 		return new Rect( (int) this.getX(), (int) this.getY(),
@@ -73,14 +79,15 @@ public class PhysicsSprite extends Sprite
 	public final void createBox( BodyType bodyType )
 	{
 		createBox( bodyType, Physics.DEFAULT_DENSITY, Physics.DEFAULT_FRICTION,
-				Physics.DEFAULT_RESTITUTION );
+				Physics.DEFAULT_RESTITUTION, true );
 	}
 
 	public final void createBox( BodyType bodyType, float density,
-			float friction, float restitution )
+			float friction, float restitution, boolean fixedRotation )
 	{
 		this.bodyDef = new BodyDef();
 		this.bodyDef.type = bodyType;
+		this.bodyDef.fixedRotation = fixedRotation;
 		Vec2 physicsPosition = getPhysicsPosition();
 		this.bodyDef.position.set( physicsPosition.x, physicsPosition.y );
 
