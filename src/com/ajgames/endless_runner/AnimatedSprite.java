@@ -11,8 +11,9 @@ public class AnimatedSprite extends Sprite
 	protected int currentFrame;
 	protected int framePeriod;
 	private long frameTicker;
-	
-	public AnimatedSprite( Bitmap bitmap, int x, int y, int width, int height, int fps, int frameCount )
+
+	public AnimatedSprite( Bitmap bitmap, int x, int y, int width, int height,
+			int fps, int frameCount )
 	{
 		this.bitmap = bitmap;
 		this.x = x;
@@ -25,7 +26,7 @@ public class AnimatedSprite extends Sprite
 		this.framePeriod = 1000 / fps;
 		this.frameTicker = 0l;
 	}
-	
+
 	public void update( long gameTime )
 	{
 		if( gameTime > frameTicker + framePeriod )
@@ -43,8 +44,9 @@ public class AnimatedSprite extends Sprite
 
 	public void draw( Canvas canvas )
 	{
-		Rect destRect = new Rect( (int)this.x, (int)this.y, (int)(this.x + this.width), (int)(this.y + this.height) );
+		Rect destRect = new Rect( (int) this.x, (int) this.y,
+				(int) ( this.x + this.width ), (int) ( this.y + this.height ) );
 		canvas.drawBitmap( this.bitmap, sourceRect, destRect, null );
 	}
-	
+
 }

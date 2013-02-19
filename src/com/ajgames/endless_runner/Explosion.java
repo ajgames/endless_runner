@@ -31,7 +31,7 @@ public class Explosion
 		Log.d( TAG, "Explosion created at " + x + "," + y );
 		this.state = STATE_ALIVE;
 		this.particles = new Particle[particleNr];
-		for ( int i = 0; i < this.particles.length; i++ )
+		for( int i = 0; i < this.particles.length; i++ )
 		{
 			Particle p = new Particle( x, y );
 			this.particles[ i ] = p;
@@ -41,7 +41,7 @@ public class Explosion
 
 	public void update()
 	{
-		for ( int i = 0; i < this.particles.length; i++ )
+		for( int i = 0; i < this.particles.length; i++ )
 		{
 			this.particles[ i ].update();
 		}
@@ -50,7 +50,7 @@ public class Explosion
 
 	public void draw( Canvas canvas )
 	{
-		for ( int i = 0; i < this.particles.length; i++ )
+		for( int i = 0; i < this.particles.length; i++ )
 		{
 			this.particles[ i ].draw( canvas );
 		}
@@ -58,9 +58,9 @@ public class Explosion
 
 	private void checkIfDead()
 	{
-		for ( int i = 0; i < this.particles.length; i++ )
+		for( int i = 0; i < this.particles.length; i++ )
 		{
-			if ( this.particles[ i ].isAlive() )
+			if( this.particles[ i ].isAlive() )
 				return;
 		}
 		this.state = STATE_DEAD;
