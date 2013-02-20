@@ -65,6 +65,15 @@ public class Runner extends PhysicsSprite
 			this.body.applyForce( JUMP_VECTOR, this.body.getPosition() );
 		}
 	}
+	
+	public void setDirection(int clickedX)
+	{
+		//i don't know how this all works yet :)
+		//where ever it was click on screen, base the direction on that
+		//left
+		//right
+		//stop moving side to side
+	}
 
 	private void initFilters()
 	{

@@ -97,7 +97,8 @@ public class MutableStack<E, T extends E> implements IDynamicStack<E> {
   /* (non-Javadoc)
    * 
    * @see org.jbox2d.pooling.IDynamicStack#pop() */
-  public final E pop() {
+  @Override
+public final E pop() {
     if (index >= size) {
       extendStack(size * 2);
     }
@@ -107,7 +108,8 @@ public class MutableStack<E, T extends E> implements IDynamicStack<E> {
   /* (non-Javadoc)
    * 
    * @see org.jbox2d.pooling.IDynamicStack#push(E) */
-  @SuppressWarnings("unchecked")
+  @Override
+@SuppressWarnings("unchecked")
   public final void push(E argObject) {
     assert (index > 0);
     stack[--index] = (T) argObject;

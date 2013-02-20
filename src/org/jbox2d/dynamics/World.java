@@ -1363,6 +1363,7 @@ public class World {
 }
 
 class WorldQueryWrapper implements TreeCallback {
+	@Override
 	public boolean treeCallback(DynamicTreeNode node) {
 		Fixture fixture = (Fixture) node.userData;
 		return callback.reportFixture(fixture);
@@ -1379,6 +1380,7 @@ class WorldRayCastWrapper implements TreeRayCastCallback {
 	private final Vec2 temp = new Vec2();
 	private final Vec2 point = new Vec2();
 	
+	@Override
 	public float raycastCallback(RayCastInput input, DynamicTreeNode node) {
 		Object userData = node.userData;
 		Fixture fixture = (Fixture) userData;

@@ -66,6 +66,7 @@ public class Sweep implements Serializable {
 	/** World angles */
 	public float a0, a;
 	
+	@Override
 	public String toString() {
 		String s = "Sweep:\nlocalCenter: " + localCenter + "\n";
 		s += "c0: " + c0 + ", c: " + c + "\n";

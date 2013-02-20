@@ -16,6 +16,7 @@ public class PlatformRenderer implements IRenderer
 		this.platforms = platforms;
 	}
 
+	@Override
 	public void render( Canvas canvas )
 	{
 		for( int i = 0; i < platforms.size(); i++ )

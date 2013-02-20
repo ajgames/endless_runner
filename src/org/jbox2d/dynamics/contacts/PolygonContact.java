@@ -38,6 +38,7 @@ public class PolygonContact extends Contact {
 		super(argPool);
 	}
 
+	@Override
 	public void init(Fixture fixtureA, Fixture fixtureB) {
 		super.init(fixtureA, fixtureB);
 		assert(m_fixtureA.getType() == ShapeType.POLYGON);

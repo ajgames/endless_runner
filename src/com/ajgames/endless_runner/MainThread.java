@@ -128,7 +128,7 @@ public class MainThread extends Thread
 
 		if( statusIntervalTimer >= lastStatusStore + STAT_INTERVAL )
 		{
-			double actualFps = (double) ( frameCountPerStatCycle / ( STAT_INTERVAL / 1000 ) );
+			double actualFps = ( frameCountPerStatCycle / ( STAT_INTERVAL / 1000 ) );
 
 			fpsStore[ (int) statsCount % FPS_HISTORY_NR ] = actualFps;
 

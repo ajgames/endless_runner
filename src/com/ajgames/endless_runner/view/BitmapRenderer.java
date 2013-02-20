@@ -18,6 +18,7 @@ public class BitmapRenderer extends SpriteRenderer
 		this.bitmap = bitmap;
 	}
 
+	@Override
 	public void render( Canvas canvas )
 	{
 		Paint paint = new Paint();

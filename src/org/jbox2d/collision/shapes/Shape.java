@@ -124,5 +124,6 @@ public abstract class Shape {
 									  Vec2 c);*/
 	
 	
+	@Override
 	public abstract Shape clone();
 }

@@ -117,6 +117,10 @@ public class GameEngine extends SurfaceView implements
 		if( event.getAction() == MotionEvent.ACTION_DOWN )
 		{
 			this.runner.jump();
+			
+			//move the guy left, right, or stop based on where on the screen was clicked
+			this.runner.setDirection(x);
+
 		}
 		return true;
 	}

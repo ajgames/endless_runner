@@ -262,6 +262,7 @@ public class BroadPhase implements TreeCallback {
 	/**
 	 * This is called from DynamicTree::query when we are gathering pairs.
 	 */
+	@Override
 	public final boolean treeCallback(DynamicTreeNode proxy) {
 		
 		// log.debug("Got a proxy back");

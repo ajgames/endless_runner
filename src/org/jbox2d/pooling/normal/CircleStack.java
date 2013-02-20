@@ -56,7 +56,8 @@ public class CircleStack<E> implements IOrderedStack<E>{
     container = (E[]) Array.newInstance(argClass, argContainerSize);
   }
 
-  public final E pop() {
+  @Override
+public final E pop() {
     index++;
     if(index >= size){
       index = 0;
@@ -64,7 +65,8 @@ public class CircleStack<E> implements IOrderedStack<E>{
     return pool[index];
   }
 
-  public final E[] pop(int argNum) {
+  @Override
+public final E[] pop(int argNum) {
     assert (argNum <= container.length) : "Container array is too small";
     if(index + argNum < size){
       System.arraycopy(pool, index, container, 0, argNum);
