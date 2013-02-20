@@ -47,6 +47,7 @@ public class MainActivity extends Activity
 	@Override
 	public void onPause() {
 	    super.onPause(); 
+	    game.stopGame();
 		Log.d( TAG, "Pausing.." );
 	}   	
 	

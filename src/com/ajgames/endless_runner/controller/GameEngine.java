@@ -87,7 +87,8 @@ public class GameEngine extends SurfaceView implements
 		{
 			try
 			{
-				mainThread.join();
+				if (mainThread != null)
+					mainThread.join();
 				retry = false;
 			} catch( InterruptedException e )
 			{
