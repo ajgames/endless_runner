@@ -63,10 +63,10 @@ public class GameEngine extends SurfaceView implements
 		
 		if( this.runner.getY() > getHeight() )
 		{
-			mainThread.setRunning( false );
-			( (Activity) getContext() ).finish();
+			//end game
+			stopGame();
 		}
-	}
+	} 
 
 	public void render( Canvas canvas )
 	{
@@ -123,6 +123,12 @@ public class GameEngine extends SurfaceView implements
 
 		}
 		return true;
+	}
+	
+	public void stopGame(){
+
+		mainThread.setRunning( false );
+		( (Activity) getContext() ).finish();
 	}
 	
 	public void setAvgFps( String avgFps )
