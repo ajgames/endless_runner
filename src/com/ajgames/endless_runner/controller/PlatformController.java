@@ -1,38 +1,39 @@
 package com.ajgames.endless_runner.controller;
 
 import java.util.Random;
+import java.util.Vector;
 
 import org.jbox2d.dynamics.World;
 
 import com.ajgames.endless_runner.model.Platform;
+import com.ajgames.endless_runner.model.Runner;
 
 public class PlatformController
 {
-	private static final float MIN_SPEED = 4.0f;
-	private static final float MAX_SPEED = 5.0f;
-	private static final float MIN_START_Y = 0.0f;
-	private static final float MAX_START_Y = 400.0f;
-	private static final float MAX_START_X = 400.0f;
-	private static final float MIN_START_X = 0.0f;
+	private static final float MAX_DIST_BETW_PLATFORMS = 100.0f;
+	private static final float MAX_DIST_FROM_SCREEN_BOTTOM = 200.0f;
 	private static final int MIN_PLATFORM_WIDTH = 10;
 	private static final int MAX_PLATFORM_WIDTH = 100;
 	private static final int MIN_PLATFORM_HEIGHT = 10;
 	private static final int MAX_PLATFORM_HEIGHT = 2;
-	private static final int NUM_PLATFORMS = 10;
-	
-	public Platform platforms[];
-	
+	private static final int START_PLATFORM_WIDTH = 300;
+	private static final int START_PLATFORM_HEIGHT = 20;
+
+	public Vector< Platform > platforms;
+
 	private Random random;
+	private Runner runner;
 	private World world;
-	
+	private GameEngine gameEngine;
+
 	public float getRandomX()
 	{
-		return random.nextFloat() * ( MAX_START_X - MIN_START_X ) + MIN_START_X;
+		return gameEngine.getWidth() + random.nextFloat() * MAX_DIST_BETW_PLATFORMS;
 	}
 
 	public float getRandomY()
 	{
-		return random.nextFloat() * ( MAX_START_Y - MIN_START_Y ) + MIN_START_Y;
+		return gameEngine.getHeight() - random.nextFloat() * MAX_DIST_FROM_SCREEN_BOTTOM;
 	}
 
 	public int getRandomWidth()
@@ -45,17 +46,7 @@ public class PlatformController
 		return random.nextInt( MAX_PLATFORM_HEIGHT ) + MIN_PLATFORM_HEIGHT;
 	}
 
-	protected float getRandomSpeed()
-	{
-		float speed = ( random.nextFloat() * MAX_SPEED - MIN_SPEED )
-				+ MIN_SPEED;
-		if( random.nextFloat() < 0.5 )
-			return speed;
-		else
-			return -speed;
-	}
-
-	protected boolean isOffScreen( Platform platform )
+	private boolean isOffScreen( Platform platform )
 	{
 		if( platform.getLinearVelocity().x < 0
 				&& platform.getX() + platform.getWidth() <= 0 )
@@ -65,43 +56,66 @@ public class PlatformController
 		else
 			return false;
 	}
-	
-	public PlatformController( World world )
+
+	private boolean isOnScreen( Platform platform )
 	{
-		this.world = world;
-		this.platforms = new Platform[ NUM_PLATFORMS ];
-		this.random = new Random();
-		this.createPlatforms( world );
-	}
-	
-	public void update()
-	{
-		Platform platform;
-		for( int i = 0; i < NUM_PLATFORMS; i++ )
-		{
-			platform = this.platforms[ i ];
-			if( isOffScreen( platform ) )
-			{
-				platform.destroy();
-				platform = createPlatform( this.world );
-				platforms[ i ] = platform;
-			}
-		}
-	}
-	
-	private void createPlatforms( World world )
-	{
-		for( int i = 0; i < NUM_PLATFORMS; i++ )
-		{
-			this.platforms[ i ] = createPlatform( world );
-		}
+		if( platform.getLinearVelocity().x < 0
+				&& platform.getX() + platform.getWidth() < gameEngine
+						.getWidth() )
+			return true;
+		else if( platform.getLinearVelocity().x > 0 && platform.getX() > 0.0f )
+			return true;
+		else
+			return false;
 	}
 
-	private Platform createPlatform( World world )
+	public PlatformController( GameEngine gameEngine, Runner runner, World world )
+	{
+		this.gameEngine = gameEngine;
+		this.runner = runner;
+		this.world = world;
+		this.platforms = new Vector< Platform >();
+		this.random = new Random();
+		this.createFirstPlatform( world );
+	}
+
+	public void update()
+	{
+		checkFirstPlatformRemoval();
+		checkAddNextPlatform();
+	}
+
+	private void createFirstPlatform( World world )
+	{
+		this.platforms.add( new Platform( 0.0f, (float) ( gameEngine
+				.getHeight() - START_PLATFORM_HEIGHT ), START_PLATFORM_WIDTH,
+				START_PLATFORM_HEIGHT, this.runner.speed, this.world ) );
+	}
+
+	private Platform createRandomPlatform()
 	{
 		return new Platform( this.getRandomX(), this.getRandomY(),
 				this.getRandomWidth(), this.getRandomHeight(),
-				this.getRandomSpeed(), world );
+				this.runner.speed, this.world );
+	}
+
+	private void checkFirstPlatformRemoval()
+	{
+		Platform platform = this.platforms.firstElement();
+		if( isOffScreen( platform ) )
+		{
+			platform.destroy();
+			this.platforms.remove( 0 );
+		}
+	}
+
+	private void checkAddNextPlatform()
+	{
+		Platform platform = this.platforms.lastElement();
+		if( isOnScreen( platform ) )
+		{
+			this.platforms.add( createRandomPlatform() );
+		}
 	}
 
 }
