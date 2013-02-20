@@ -64,8 +64,7 @@ public class GameEngine extends SurfaceView implements
 		
 		if( this.runner.getY() > getHeight() )
 		{
-			//end game
-			stopGame();
+			newGame();
 		}
 	} 
 
@@ -133,9 +132,26 @@ public class GameEngine extends SurfaceView implements
 
 		mainThread.setRunning( false );
 		( (Activity) getContext() ).finish();
+		
 	}
 	
 	public void newGame(){
+		// adding the callback (this) to the surface holder to intercept events
+		this.getHolder().addCallback( this );
+
+		// make the GamePanel focusable so it can handle events
+		this.setFocusable( true );
+
+		this.world = new World( Physics.GRAVITY_VEC, Physics.DO_SLEEP );
+		this.world.setContactListener( new MainContactListener() );
+		
+		this.runner = new Runner( 30.0f, 0.0f, this.world );
+		
+		this.platformController = new PlatformController( this, this.runner, this.world );
+		
+		this.renderer = new RunningGameRenderer( this, this.platformController.platforms, this.runner );
+
+		this.mainThread = new MainThread( this.getHolder(), this );
 	}
 	public void pauseGame(){
 	}

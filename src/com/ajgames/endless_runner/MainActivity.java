@@ -34,7 +34,16 @@ public class MainActivity extends Activity
 	    super.onResume(); 
 		Log.d( TAG, "Resuming.." );
 	}   
-	
+	@Override
+	public void onStart() {
+	    super.onStart(); 
+		Log.d( TAG, "Starting.." );
+	}
+	@Override
+	public void onRestart() {
+	    super.onRestart(); 
+		Log.d( TAG, "Restarting.." );
+	}
 	@Override
 	public void onPause() {
 	    super.onPause(); 
