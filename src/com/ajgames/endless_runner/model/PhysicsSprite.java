@@ -90,7 +90,8 @@ public class PhysicsSprite extends Sprite
 		this.bodyDef.position.set( physicsPosition.x, physicsPosition.y );
 
 		this.body = this.world.createBody( bodyDef );
-
+		this.body.setUserData( this );
+		
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox( ( width / Physics.DRAW_SCALE ) * 0.5f,
 				( height / Physics.DRAW_SCALE ) * 0.5f );
