@@ -15,7 +15,6 @@ public class Runner extends PhysicsSprite
 	public float speed = -5.0f;
 	
 	private boolean grounded = false;
-	private boolean movingUp = false;
 	private boolean movingDown = false;
 	
 	private Filter collidePlatformsFilter;
@@ -39,15 +38,12 @@ public class Runner extends PhysicsSprite
 		
 		if( this.getLinearVelocity().y > 0 && !this.movingDown )
 		{
-			this.movingUp = false;
 			this.movingDown = true;
 			this.body.getFixtureList().setFilterData( this.collidePlatformsFilter );
 		}
-		else if( this.getLinearVelocity().y < 0 && !this.movingUp )
+		else if( this.getLinearVelocity().y <= 0 )
 		{
-			this.movingUp = true;
 			this.movingDown = false;
-			this.body.getFixtureList().setFilterData( this.avoidPlatformsFilter );
 		}
 	}
 
@@ -61,7 +57,9 @@ public class Runner extends PhysicsSprite
 	{
 		if( this.grounded )
 		{
+			this.movingDown = false;
 			this.grounded = false;
+			this.body.getFixtureList().setFilterData( this.avoidPlatformsFilter );
 			this.body.applyForce( JUMP_VECTOR, this.body.getPosition() );
 		}
 	}
