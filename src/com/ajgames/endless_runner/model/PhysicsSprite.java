@@ -8,8 +8,6 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Rect;
 
 public class PhysicsSprite extends Sprite
