@@ -85,8 +85,10 @@ public class GameEngine extends SurfaceView implements
 	@Override
 	public void surfaceCreated( SurfaceHolder arg0 )
 	{
-		this.mainThread.setRunning( true );
-		this.mainThread.start();
+        if(!mainThread.isAlive()){
+        	this.mainThread.setRunning( true );
+        	this.mainThread.start();
+        }
 	}
 
 	@Override
@@ -120,6 +122,7 @@ public class GameEngine extends SurfaceView implements
 			this.runner.jump();
 			
 			//move the guy left, right, or stop based on where on the screen was clicked
+			//TODO this is not currently functional
 			this.runner.setDirection(x);
 
 		}
@@ -133,10 +136,12 @@ public class GameEngine extends SurfaceView implements
 	}
 	
 	public void newGame(){
-
 		mainThread.setRunning( false );
 		( (Activity) getContext() ).finish();
-
+	}
+	public void pauseGame(){
+	}
+	public void resumeGame(){
 	}
 	
 	public void setAvgFps( String avgFps )
