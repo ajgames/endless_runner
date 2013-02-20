@@ -12,7 +12,8 @@ public class MainActivity extends Activity
 {
 
 	private static final String TAG = MainActivity.class.getSimpleName();
-
+	private GameEngine game;
+	
 	@Override
 	protected void onCreate( Bundle savedInstanceState )
 	{
@@ -21,10 +22,20 @@ public class MainActivity extends Activity
 		requestWindowFeature( Window.FEATURE_NO_TITLE );
 		getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN );
-		setContentView( new GameEngine( this ) );
+		game = new GameEngine( this ); 
+		setContentView( game );
+		
+		
 		Log.d( TAG, "View added" );
 	}
-
+	   // when the app is pushed to the background, pause it
+	   @Override
+	   public void onPause()
+	   {
+	      super.onPause(); // call the super method
+	      game.stopGame(); // terminates the game
+	   } // end method onPause
+	   
 	@Override
 	protected void onDestroy()
 	{
