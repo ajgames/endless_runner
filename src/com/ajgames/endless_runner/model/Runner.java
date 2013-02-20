@@ -20,6 +20,11 @@ public class Runner extends PhysicsSprite
 	private Filter collidePlatformsFilter;
 	private Filter avoidPlatformsFilter;
 
+	public boolean allowJump()
+	{
+		return this.grounded;
+	}
+	
 	public Runner( float startX, float startY, World world )
 	{
 		super( startX, startY, 20, 20, world );
@@ -55,13 +60,10 @@ public class Runner extends PhysicsSprite
 	
 	public void jump()
 	{
-		if( this.grounded )
-		{
-			this.movingDown = false;
-			this.grounded = false;
-			this.body.getFixtureList().setFilterData( this.avoidPlatformsFilter );
-			this.body.applyForce( JUMP_VECTOR, this.body.getPosition() );
-		}
+		this.movingDown = false;
+		this.grounded = false;
+		this.body.getFixtureList().setFilterData( this.avoidPlatformsFilter );
+		this.body.applyForce( JUMP_VECTOR, this.body.getPosition() );
 	}
 	
 	public void setDirection(int clickedX)
