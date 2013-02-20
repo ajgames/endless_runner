@@ -33,6 +33,7 @@ public class GameEngine extends SurfaceView implements
 	private PlatformController platformController;
 
 	private MainThread mainThread;
+	
 
 	public GameEngine( Context context )
 	{
@@ -64,7 +65,7 @@ public class GameEngine extends SurfaceView implements
 		if( this.runner.getY() > getHeight() )
 		{
 			//end game
-			stopGame();
+			newGame();
 		}
 	} 
 
@@ -129,6 +130,13 @@ public class GameEngine extends SurfaceView implements
 
 		mainThread.setRunning( false );
 		( (Activity) getContext() ).finish();
+	}
+	
+	public void newGame(){
+
+		mainThread.setRunning( false );
+		( (Activity) getContext() ).finish();
+
 	}
 	
 	public void setAvgFps( String avgFps )
