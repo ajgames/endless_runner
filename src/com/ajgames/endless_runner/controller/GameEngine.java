@@ -30,6 +30,7 @@ public class GameEngine extends SurfaceView implements
 	
 	private IRenderer renderer;
 
+	private GravityController gravityController;
 	private PlatformController platformController;
 
 	private MainThread mainThread;
@@ -44,6 +45,7 @@ public class GameEngine extends SurfaceView implements
 	public void update() 
 	{
 		this.world.step( 1.0f / 60.0f, 6, 2 );
+		this.gravityController.update();
 		this.platformController.update();
 		this.runner.update();
 		
@@ -99,16 +101,25 @@ public class GameEngine extends SurfaceView implements
 	public boolean onTouchEvent( MotionEvent event )
 	{
 		int x = (int) event.getX();
-		int y = (int) event.getY();
 
-		if( event.getAction() == MotionEvent.ACTION_DOWN )
+		switch( event.getAction() )
 		{
-			this.runner.jump();
-			
-			//move the guy left, right, or stop based on where on the screen was clicked
-			//TODO this is not currently functional
-			this.runner.setDirection(x);
-
+			case MotionEvent.ACTION_DOWN:
+			{
+				if( this.runner.allowJump() )
+				{
+					this.gravityController.startDecreasingGravity();
+					this.runner.jump();
+				}
+				//move the guy left, right, or stop based on where on the screen was clicked
+				//TODO this is not currently functional
+				this.runner.setDirection(x);
+				break;
+			}
+			case MotionEvent.ACTION_UP:
+			{
+				this.gravityController.stopDecreasingGravity();
+			}
 		}
 		return true;
 	}
@@ -127,11 +138,12 @@ public class GameEngine extends SurfaceView implements
 		// make the GamePanel focusable so it can handle events
 		this.setFocusable( true );
 
-		this.world = new World( Physics.GRAVITY_VEC, Physics.DO_SLEEP );
+		this.world = new World( Physics.DEFAULT_GRAVITY_VEC, Physics.DO_SLEEP );
 		this.world.setContactListener( new MainContactListener() );
 		
 		this.runner = new Runner( 30.0f, 0.0f, this.world );
 		
+		this.gravityController = new GravityController( this.world );
 		this.platformController = new PlatformController( this, this.runner, this.world );
 		
 		this.renderer = new RunningGameRenderer( this, this.platformController.platforms, this.runner );
