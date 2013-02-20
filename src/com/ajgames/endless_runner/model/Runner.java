@@ -8,12 +8,13 @@ import org.jbox2d.dynamics.World;
 
 public class Runner extends PhysicsSprite
 {	
-	private static final Vec2 JUMP_VECTOR = new Vec2( 0.0f, -100.0f );
+	private static final Vec2 JUMP_VECTOR = new Vec2( 0.0f, -200.0f );
 	private static final Vec2 MOVE_RIGHT_VECTOR = new Vec2( 50.0f, 0.0f );
 	private static final Vec2 MOVE_LEFT_VECTOR = new Vec2( -50.0f, 0.0f );
 
 	public float speed = -5.0f;
 	
+	private boolean grounded = false;
 	private boolean movingUp = false;
 	private boolean movingDown = false;
 	
@@ -50,9 +51,19 @@ public class Runner extends PhysicsSprite
 		}
 	}
 
+	@Override
+	public void onCollisionBegan( PhysicsSprite sprite )
+	{
+		this.grounded = true;
+	}
+	
 	public void jump()
 	{
-		this.body.applyForce( JUMP_VECTOR, this.body.getPosition() );
+		if( this.grounded )
+		{
+			this.grounded = false;
+			this.body.applyForce( JUMP_VECTOR, this.body.getPosition() );
+		}
 	}
 
 	private void initFilters()
