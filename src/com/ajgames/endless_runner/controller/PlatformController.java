@@ -11,12 +11,12 @@ import com.ajgames.endless_runner.model.Runner;
 public class PlatformController
 {
 	private static final float MAX_DIST_BETW_PLATFORMS = 100.0f;
-	private static final float MAX_DIST_FROM_SCREEN_BOTTOM = 200.0f;
-	private static final int MIN_PLATFORM_WIDTH = 10;
-	private static final int MAX_PLATFORM_WIDTH = 100;
+	private static final float MAX_DIST_FROM_SCREEN_BOTTOM = 100.0f;
+	private static final int MIN_PLATFORM_WIDTH = 100;
+	private static final int MAX_PLATFORM_WIDTH = 300;
 	private static final int MIN_PLATFORM_HEIGHT = 10;
 	private static final int MAX_PLATFORM_HEIGHT = 2;
-	private static final int START_PLATFORM_WIDTH = 300;
+	private static final int START_PLATFORM_WIDTH = 500;
 	private static final int START_PLATFORM_HEIGHT = 20;
 
 	public Vector< Platform > platforms;
@@ -87,8 +87,7 @@ public class PlatformController
 
 	private void createFirstPlatform( World world )
 	{
-		this.platforms.add( new Platform( 0.0f, (float) ( gameEngine
-				.getHeight() - START_PLATFORM_HEIGHT ), START_PLATFORM_WIDTH,
+		this.platforms.add( new Platform( 0.0f, 200.0f, START_PLATFORM_WIDTH,
 				START_PLATFORM_HEIGHT, this.runner.speed, this.world ) );
 	}
 
