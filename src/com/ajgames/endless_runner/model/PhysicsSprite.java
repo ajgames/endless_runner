@@ -74,6 +74,16 @@ public class PhysicsSprite extends Sprite
 		this.world.destroyBody( this.body );
 	}
 
+	public void onCollisionBegan( PhysicsSprite sprite )
+	{
+		
+	}
+	
+	public void onCollisionEnded( PhysicsSprite sprite )
+	{
+		
+	}
+	
 	public final void createBox( BodyType bodyType )
 	{
 		createBox( bodyType, Physics.DEFAULT_DENSITY, Physics.DEFAULT_FRICTION,
