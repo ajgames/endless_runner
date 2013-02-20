@@ -21,7 +21,7 @@ public class GameEngine extends SurfaceView implements
 		SurfaceHolder.Callback
 {
 	private static final String TAG = GameEngine.class.getSimpleName();
-
+	
 	private String avgFps;
 	
 	private World world;
@@ -44,9 +44,9 @@ public class GameEngine extends SurfaceView implements
 
 		this.world = new World( Physics.GRAVITY_VEC, Physics.DO_SLEEP );
 		
-		this.runner = new Runner( this.world );
+		this.runner = new Runner( 30.0f, 0.0f, this.world );
 		
-		this.platformController = new PlatformController( this.world );
+		this.platformController = new PlatformController( this, this.runner, this.world );
 		
 		this.renderer = new RunningGameRenderer( this, this.platformController.platforms, this.runner );
 
@@ -58,6 +58,12 @@ public class GameEngine extends SurfaceView implements
 		this.world.step( 1.0f / 60.0f, 6, 2 );
 		this.platformController.update();
 		this.runner.update();
+		
+		if( this.runner.getY() > getHeight() )
+		{
+			mainThread.setRunning( false );
+			( (Activity) getContext() ).finish();
+		}
 	}
 
 	public void render( Canvas canvas )
@@ -108,11 +114,6 @@ public class GameEngine extends SurfaceView implements
 
 		if( event.getAction() == MotionEvent.ACTION_DOWN )
 		{
-			if( y > getHeight() - 50 )
-			{
-				mainThread.setRunning( false );
-				( (Activity) getContext() ).finish();
-			}
 			this.runner.jump();
 		}
 		return true;
