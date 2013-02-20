@@ -11,14 +11,16 @@ public class Runner extends PhysicsSprite
 	private static final Vec2 MOVE_RIGHT_VECTOR = new Vec2( 50.0f, 0.0f );
 	private static final Vec2 MOVE_LEFT_VECTOR = new Vec2( -50.0f, 0.0f );
 
+	public float speed = -5.0f;
+	
 	public boolean movingLeft = false;
 	public boolean movingRight = false;
 
-	public Runner( World world )
+	public Runner( float startX, float startY, World world )
 	{
-		super( 200.0f, 0.0f, 20, 20, world );
+		super( startX, startY, 20, 20, world );
 		this.createBox( BodyType.DYNAMIC, Physics.DEFAULT_DENSITY,
-				Physics.DEFAULT_FRICTION, 0, true );
+				0, 0, true );
 		this.bodyDef.fixedRotation = true;
 	}
 
