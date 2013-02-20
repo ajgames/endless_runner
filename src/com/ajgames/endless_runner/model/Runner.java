@@ -7,9 +7,7 @@ import org.jbox2d.dynamics.World;
 
 
 public class Runner extends PhysicsSprite
-{
-	private static final int AVOID_PLATFORMS_BITS = 0x0002;
-	
+{	
 	private static final Vec2 JUMP_VECTOR = new Vec2( 0.0f, -100.0f );
 	private static final Vec2 MOVE_RIGHT_VECTOR = new Vec2( 50.0f, 0.0f );
 	private static final Vec2 MOVE_LEFT_VECTOR = new Vec2( -50.0f, 0.0f );
