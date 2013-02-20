@@ -28,13 +28,14 @@ public class MainActivity extends Activity
 		
 		Log.d( TAG, "View added" );
 	}
+	
 	// when the app is pushed to the background, pause it
 	@Override
 	public void onPause()
 	{
 	   super.onPause(); // call the super method
-	   game.pauseGame(); // pause the game
-	} // end method onPause
+	   game.pauseGame();
+	} 
 	@Override
 	public void onResume() {
 	    super.onResume(); 
