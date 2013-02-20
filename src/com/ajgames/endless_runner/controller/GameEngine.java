@@ -12,6 +12,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.ajgames.endless_runner.MainThread;
+import com.ajgames.endless_runner.callbacks.MainContactListener;
 import com.ajgames.endless_runner.model.Physics;
 import com.ajgames.endless_runner.model.Runner;
 import com.ajgames.endless_runner.view.IRenderer;
@@ -43,6 +44,7 @@ public class GameEngine extends SurfaceView implements
 		this.setFocusable( true );
 
 		this.world = new World( Physics.GRAVITY_VEC, Physics.DO_SLEEP );
+		this.world.setContactListener( new MainContactListener() );
 		
 		this.runner = new Runner( 30.0f, 0.0f, this.world );
 		
