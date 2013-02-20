@@ -1,5 +1,7 @@
 package com.ajgames.endless_runner.view;
 
+import java.util.Vector;
+
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -10,15 +12,18 @@ import com.ajgames.endless_runner.model.Runner;
 import com.example.endless_runner.R;
 
 public class RunningGameRenderer implements IRenderer
-{	
+{
 	private GameEngine gameEngine;
 	private RunnerRenderer runnerRenderer;
 	private PlatformRenderer platformRenderer;
-	
-	public RunningGameRenderer( GameEngine gameEngine, Platform platforms[], Runner runner )
+
+	public RunningGameRenderer( GameEngine gameEngine,
+			Vector< Platform > platforms, Runner runner )
 	{
 		this.gameEngine = gameEngine;
-		this.runnerRenderer = new RunnerRenderer( runner, BitmapFactory.decodeResource( this.gameEngine.getResources(), R.drawable.droid ) );
+		this.runnerRenderer = new RunnerRenderer( runner,
+				BitmapFactory.decodeResource( this.gameEngine.getResources(),
+						R.drawable.droid ) );
 		this.platformRenderer = new PlatformRenderer( platforms );
 	}
 
@@ -29,5 +34,5 @@ public class RunningGameRenderer implements IRenderer
 		this.platformRenderer.render( canvas );
 		this.runnerRenderer.render( canvas );
 	}
-	
+
 }
