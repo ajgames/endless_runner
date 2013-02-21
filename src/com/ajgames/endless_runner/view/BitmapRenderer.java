@@ -2,29 +2,38 @@ package com.ajgames.endless_runner.view;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
-import android.graphics.Paint;
+import android.graphics.Rect;
 
 import com.ajgames.endless_runner.model.Sprite;
 
 public class BitmapRenderer extends SpriteRenderer
 {
 
-	private Bitmap bitmap;
+	protected Bitmap bitmap;
+	protected Rect sourceRect;
 
 	public BitmapRenderer( Sprite sprite, Bitmap bitmap )
 	{
 		super( sprite );
 		this.bitmap = bitmap;
+		this.width = bitmap.getWidth();
+		this.height = bitmap.getHeight();
+		this.sourceRect = new Rect( 0, 0, this.width, this.height );
+	}
+
+	public void destroy()
+	{
+		this.bitmap.recycle();
 	}
 
 	@Override
 	public void render( Canvas canvas )
 	{
-		Paint paint = new Paint();
-		Matrix matrix = new Matrix();
-		matrix.postTranslate( this.sprite.getX(), this.sprite.getY() );
-		canvas.drawBitmap( bitmap, matrix, paint );
+		Rect destRect = new Rect( (int) this.sprite.getX(),
+				(int) this.sprite.getY(),
+				(int) ( this.sprite.getX() + this.sprite.getWidth() ),
+				(int) ( this.sprite.getY() + this.sprite.getHeight() ) );
+		canvas.drawBitmap( this.bitmap, this.sourceRect, destRect, null );
 	}
 
 }
