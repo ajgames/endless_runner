@@ -30,7 +30,7 @@ public class RunningGameRenderer implements IRenderer
 	@Override
 	public void render( Canvas canvas )
 	{
-		canvas.drawColor( Color.GREEN );
+		canvas.drawColor( Color.parseColor("#AF988E") );
 		this.platformRenderer.render( canvas );
 		this.runnerRenderer.render( canvas );
 	}
