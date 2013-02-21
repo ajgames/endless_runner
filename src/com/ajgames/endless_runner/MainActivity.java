@@ -6,7 +6,9 @@ import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
+
 import com.ajgames.endless_runner.controller.GameEngine;
+import com.example.endless_runner.R;
 
 public class MainActivity extends Activity
 {
@@ -25,10 +27,12 @@ public class MainActivity extends Activity
 		game = new GameEngine( this ); 
 		setContentView( game );
 		
+
 		
 		Log.d( TAG, "View added" );
 	}
 	
+	      
 	@Override
 	public void onResume() {
 	    super.onResume(); 

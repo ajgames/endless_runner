@@ -3,20 +3,30 @@ package com.ajgames.endless_runner.controller;
 import org.jbox2d.dynamics.World;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.widget.Toast;
 
+import com.ajgames.endless_runner.MainActivity;
 import com.ajgames.endless_runner.MainThread;
 import com.ajgames.endless_runner.callbacks.MainContactListener;
 import com.ajgames.endless_runner.model.Physics;
 import com.ajgames.endless_runner.model.Runner;
 import com.ajgames.endless_runner.view.IRenderer;
 import com.ajgames.endless_runner.view.RunningGameRenderer;
+import com.example.endless_runner.R;
+
 
 public class GameEngine extends SurfaceView implements
 		SurfaceHolder.Callback
@@ -40,6 +50,7 @@ public class GameEngine extends SurfaceView implements
 	{
 		super( context );
 		newGame();
+		
 	}
 
 	public void update() 
