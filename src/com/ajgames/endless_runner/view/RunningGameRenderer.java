@@ -13,17 +13,19 @@ import com.example.endless_runner.R;
 
 public class RunningGameRenderer implements IRenderer
 {
+	private Animator animator;
 	private GameEngine gameEngine;
 	private RunnerRenderer runnerRenderer;
 	private PlatformRenderer platformRenderer;
 
 	public RunningGameRenderer( GameEngine gameEngine,
-			Vector< Platform > platforms, Runner runner )
+			Vector< Platform > platforms, Runner runner, Animator animator )
 	{
+		this.animator = animator;
 		this.gameEngine = gameEngine;
 		this.runnerRenderer = new RunnerRenderer( runner,
 				BitmapFactory.decodeResource( this.gameEngine.getResources(),
-						R.drawable.droid ) );
+						R.drawable.runner ), this.animator );
 		this.platformRenderer = new PlatformRenderer( platforms );
 	}
 

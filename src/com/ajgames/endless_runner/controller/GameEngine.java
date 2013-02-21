@@ -23,6 +23,7 @@ import com.ajgames.endless_runner.MainThread;
 import com.ajgames.endless_runner.callbacks.MainContactListener;
 import com.ajgames.endless_runner.model.Physics;
 import com.ajgames.endless_runner.model.Runner;
+import com.ajgames.endless_runner.view.Animator;
 import com.ajgames.endless_runner.view.IRenderer;
 import com.ajgames.endless_runner.view.RunningGameRenderer;
 import com.example.endless_runner.R;
@@ -38,6 +39,7 @@ public class GameEngine extends SurfaceView implements
 	private World world;
 	private Runner runner;
 	
+	private Animator animator;
 	private IRenderer renderer;
 
 	private GravityController gravityController;
@@ -56,6 +58,7 @@ public class GameEngine extends SurfaceView implements
 	public void update() 
 	{
 		this.world.step( 1.0f / 60.0f, 6, 2 );
+		this.animator.update();
 		this.gravityController.update();
 		this.platformController.update();
 		this.runner.update();
@@ -158,7 +161,8 @@ public class GameEngine extends SurfaceView implements
 		this.gravityController = new GravityController( this.world );
 		this.platformController = new PlatformController( this, this.runner, this.world );
 		
-		this.renderer = new RunningGameRenderer( this, this.platformController.platforms, this.runner );
+		this.animator = new Animator();
+		this.renderer = new RunningGameRenderer( this, this.platformController.platforms, this.runner, this.animator );
 
 		this.mainThread = new MainThread( this.getHolder(), this );
 	}
