@@ -8,10 +8,14 @@ import com.ajgames.endless_runner.model.Sprite;
 public class SpriteRenderer
 {
 	protected Sprite sprite;
+	protected int width;
+	protected int height;
 
 	public SpriteRenderer( Sprite sprite )
 	{
 		this.sprite = sprite;
+		this.height = sprite.getHeight();
+		this.width = sprite.getWidth();
 	}
 
 	public void render( Canvas canvas )
