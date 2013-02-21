@@ -27,8 +27,8 @@ public class Runner extends PhysicsSprite
 	
 	public Runner( float startX, float startY, World world )
 	{
-		super( startX, startY, 20, 20, world );
-		this.createBox( BodyType.DYNAMIC, Physics.DEFAULT_DENSITY,
+		super( startX, startY, 60, 60, world );
+		this.createBox( BodyType.DYNAMIC, 0.1f,
 				0, 0, true );
 		
 		this.initFilters();
