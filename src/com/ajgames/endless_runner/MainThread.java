@@ -12,7 +12,7 @@ public class MainThread extends Thread
 {
 	private static final String TAG = MainThread.class.getSimpleName();
 
-	public static final int MAX_FPS = 60;
+	public static final int MAX_FPS = 48;
 	private static final int MAX_FRAME_SKIPS = 5;
 	private static final int FRAME_PERIOD = 1000 / MAX_FPS;
 
@@ -81,8 +81,7 @@ public class MainThread extends Thread
 
 					if( sleepTime > 0 )
 					{
-						try
-						{
+						try{	
 							Thread.sleep( sleepTime );
 						} catch( InterruptedException e )
 						{
@@ -106,7 +105,7 @@ public class MainThread extends Thread
 				}
 			} finally
 			{
-				if( canvas != null )
+				if( canvas != null && running)
 				{
 					surfaceHolder.unlockCanvasAndPost( canvas );
 				}
@@ -159,7 +158,20 @@ public class MainThread extends Thread
 			gameEngine.setAvgFps("FPS: " + df.format(averageFps));
 		}
 	}
-
+	public void die(){
+		boolean retry = true;
+		while( retry )
+		{
+			try
+			{
+				if (this != null)
+					this.join();
+				retry = false;
+			} catch( InterruptedException e )
+			{	// try again shutting down the thread
+			}
+		}
+	}
 	private void initTimingElements()
 	{
 		fpsStore = new double[FPS_HISTORY_NR];
