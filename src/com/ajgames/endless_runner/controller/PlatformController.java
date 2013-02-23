@@ -26,6 +26,15 @@ public class PlatformController
 	private World world;
 	private GameEngine gameEngine;
 
+	public PlatformController( GameEngine gameEngine, Runner runner, World world ){
+		this.gameEngine = gameEngine;
+		this.runner = runner;
+		this.world = world;
+		this.platforms = new Vector< Platform >();
+		this.random = new Random();
+		this.createFirstPlatform( world );
+	}
+	
 	public float getRandomX()
 	{
 		return gameEngine.getWidth() + random.nextFloat() * MAX_DIST_BETW_PLATFORMS;
@@ -67,16 +76,6 @@ public class PlatformController
 			return true;
 		else
 			return false;
-	}
-
-	public PlatformController( GameEngine gameEngine, Runner runner, World world )
-	{
-		this.gameEngine = gameEngine;
-		this.runner = runner;
-		this.world = world;
-		this.platforms = new Vector< Platform >();
-		this.random = new Random();
-		this.createFirstPlatform( world );
 	}
 
 	public void update()

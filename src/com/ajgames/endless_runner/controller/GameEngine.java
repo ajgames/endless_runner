@@ -52,9 +52,27 @@ public class GameEngine extends SurfaceView implements
 	{
 		super( context );
 		newGame();
-		
 	}
+	public void newGame(){
+		// adding the callback (this) to the surface holder to intercept events
+		this.getHolder().addCallback( this );
 
+		// make the GamePanel focusable so it can handle events
+		this.setFocusable( true );
+
+		this.world = new World( Physics.DEFAULT_GRAVITY_VEC, Physics.DO_SLEEP );
+		this.world.setContactListener( new MainContactListener() );
+		
+		this.runner = new Runner( 30.0f, 0.0f, this.world );
+		
+		this.gravityController = new GravityController( this.world );
+		this.platformController = new PlatformController( this, this.runner, this.world );
+		
+		this.animator = new Animator();
+		this.renderer = new RunningGameRenderer( this, this.platformController.platforms, this.runner, this.animator );
+
+		this.mainThread = new MainThread( this.getHolder(), this );
+	}
 	public void update() 
 	{
 		this.world.step( 1.0f / 60.0f, 6, 2 );
@@ -146,26 +164,6 @@ public class GameEngine extends SurfaceView implements
 		
 	}
 	
-	public void newGame(){
-		// adding the callback (this) to the surface holder to intercept events
-		this.getHolder().addCallback( this );
-
-		// make the GamePanel focusable so it can handle events
-		this.setFocusable( true );
-
-		this.world = new World( Physics.DEFAULT_GRAVITY_VEC, Physics.DO_SLEEP );
-		this.world.setContactListener( new MainContactListener() );
-		
-		this.runner = new Runner( 30.0f, 0.0f, this.world );
-		
-		this.gravityController = new GravityController( this.world );
-		this.platformController = new PlatformController( this, this.runner, this.world );
-		
-		this.animator = new Animator();
-		this.renderer = new RunningGameRenderer( this, this.platformController.platforms, this.runner, this.animator );
-
-		this.mainThread = new MainThread( this.getHolder(), this );
-	}
 	public void pauseGame(){
 	}
 	public void resumeGame(){
