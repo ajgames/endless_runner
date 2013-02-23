@@ -89,7 +89,10 @@ public class GameEngine extends SurfaceView implements
 		//ideally display high score and go back to main menu
 		//but for now just restart the game
 		//how do you break out of game engine????
+
+		//mainThread.die();
 		if( this.runner.getY() > getHeight() ){
+			stopGame();
 			//newGame();
 			//displayAlert();
 		}
@@ -123,21 +126,8 @@ public class GameEngine extends SurfaceView implements
 	{
 		// tell the thread to shut down and wait for it to finish
 		// this is a clean shutdown
-		boolean retry = true;
-		mainThread.die();
-		/*
-		while( retry )
-		{
-			try
-			{
-				if (mainThread != null)
-					mainThread.join();
-				retry = false;
-			} catch( InterruptedException e )
-			{
-				// try again shutting down the thread
-			}
-		}*/
+		//mainThread.die();
+		mainThread.interrupt();
 		Log.d( TAG, "Surface was destroyed - GameEngine.java" );
 	}
 
@@ -170,6 +160,20 @@ public class GameEngine extends SurfaceView implements
 	
 	public void stopGame(){
 		mainThread.setRunning( false );
+//		mainThread.die();
+		boolean retry = true;
+		while( retry )
+		{
+			try
+			{
+				if (mainThread != null)
+					mainThread.join(800);
+			} catch( InterruptedException e )
+			{	// try again shutting down the thread
+			}
+			if (mainThread == null) 
+				retry = true;
+		}
 		( (Activity) getContext() ).finish();
 	}
 	

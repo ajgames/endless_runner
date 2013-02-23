@@ -25,10 +25,7 @@ public class MainActivity extends Activity
 		
 
 		setContentView( R.layout.activity_main );
-
-		Intent intent = new Intent(MainActivity.this, PlayGameActivity.class);
-	    startActivity(intent);
-		//displayAlert();
+		displayAlert();
 		
 		Log.d( TAG, "View added" );
 	}
@@ -37,6 +34,10 @@ public class MainActivity extends Activity
 	@Override
 	public void onResume() {
 	    super.onResume(); 
+		displayAlert();
+		
+        Log.d(TAG, "onResume screen state : "
+                 +String.valueOf(this.hasWindowFocus()));
 		Log.d( TAG, "Resuming.." );
 	}   
 	@Override
@@ -47,6 +48,7 @@ public class MainActivity extends Activity
 	@Override
 	public void onRestart() {
 	    super.onRestart(); 
+	    
 		Log.d( TAG, "Restarting.." );
 	}
 	@Override
@@ -83,6 +85,11 @@ public class MainActivity extends Activity
 					public void onClick(DialogInterface dialog,int id) {
 						// if this button is clicked, close
 						// current activity
+
+						Intent intent = new Intent(MainActivity.this, PlayGameActivity.class);
+					    startActivity(intent);
+					    dialog.dismiss();
+						//dialog.cancel();
 					}
 				  })
 				.setNegativeButton("No",new DialogInterface.OnClickListener() {
