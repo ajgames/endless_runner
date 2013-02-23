@@ -73,7 +73,8 @@ public class GameEngine extends SurfaceView implements
 		this.animator = new Animator();
 		this.renderer = new RunningGameRenderer( this, this.platformController.platforms, this.runner, this.animator );
 
-		this.mainThread = new MainThread( this.getHolder(), this );
+		if (mainThread == null)
+			this.mainThread = new MainThread( this.getHolder(), this );
 	}
 	public void update() 
 	{
@@ -89,7 +90,7 @@ public class GameEngine extends SurfaceView implements
 		//but for now just restart the game
 		//how do you break out of game engine????
 		if( this.runner.getY() > getHeight() ){
-			newGame();
+			//newGame();
 			//displayAlert();
 		}
 	} 

@@ -3,6 +3,7 @@ package com.ajgames.endless_runner;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
@@ -16,19 +17,18 @@ public class MainActivity extends Activity
 {
 
 	private static final String TAG = MainActivity.class.getSimpleName();
-	private GameEngine game;
 	
 	@Override
 	protected void onCreate( Bundle savedInstanceState )
 	{
 		super.onCreate( savedInstanceState );
-		requestWindowFeature( Window.FEATURE_NO_TITLE );
-		getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN );
 		
-		game = new GameEngine( this ); 
-		
-		displayAlert();
+
+		setContentView( R.layout.activity_main );
+
+		Intent intent = new Intent(MainActivity.this, PlayGameActivity.class);
+	    startActivity(intent);
+		//displayAlert();
 		
 		Log.d( TAG, "View added" );
 	}
@@ -83,7 +83,6 @@ public class MainActivity extends Activity
 					public void onClick(DialogInterface dialog,int id) {
 						// if this button is clicked, close
 						// current activity
-						setContentView( game );
 					}
 				  })
 				.setNegativeButton("No",new DialogInterface.OnClickListener() {
