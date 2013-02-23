@@ -1,6 +1,8 @@
 package com.ajgames.endless_runner;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Window;
@@ -19,15 +21,14 @@ public class MainActivity extends Activity
 	@Override
 	protected void onCreate( Bundle savedInstanceState )
 	{
-		//this is just a test!
 		super.onCreate( savedInstanceState );
 		requestWindowFeature( Window.FEATURE_NO_TITLE );
 		getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN );
-		game = new GameEngine( this ); 
-		setContentView( game );
 		
-
+		game = new GameEngine( this ); 
+		
+		displayAlert();
 		
 		Log.d( TAG, "View added" );
 	}
@@ -51,7 +52,6 @@ public class MainActivity extends Activity
 	@Override
 	public void onPause() {
 	    super.onPause(); 
-	    game.stopGame();
 		Log.d( TAG, "Pausing.." );
 	}   	
 	
@@ -67,6 +67,38 @@ public class MainActivity extends Activity
 	{
 		super.onStop();
 		Log.d( TAG, "Stopping..." );
+	}
+	private void displayAlert(){
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+				this);
+
+			// set title
+			alertDialogBuilder.setTitle("You Died!");
+
+			// set dialog message
+			alertDialogBuilder
+				.setMessage("Retry?!")
+				.setCancelable(false)
+				.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int id) {
+						// if this button is clicked, close
+						// current activity
+						setContentView( game );
+					}
+				  })
+				.setNegativeButton("No",new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int id) {
+						// if this button is clicked, just close
+						// the dialog box and do nothing
+						dialog.cancel();
+					}
+				});
+
+				// create alert dialog
+				AlertDialog alertDialog = alertDialogBuilder.create();
+
+				// show it
+				alertDialog.show();
 	}
 
 }

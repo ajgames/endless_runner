@@ -34,29 +34,48 @@ public class PlatformController
 		this.random = new Random();
 		this.createFirstPlatform( world );
 	}
-	
-	public float getRandomX()
-	{
-		return gameEngine.getWidth() + random.nextFloat() * MAX_DIST_BETW_PLATFORMS;
+	private void createFirstPlatform( World world ){
+		this.platforms.add( new Platform( 0.0f, 200.0f, START_PLATFORM_WIDTH,
+				START_PLATFORM_HEIGHT, this.runner.speed, this.world ) );
 	}
-
-	public float getRandomY()
-	{
+	public void update(){
+		//does the first platform on screen need to be removed?
+		checkFirstPlatformRemoval();
+		//is the last item placed totally on the screen
+		//if so add a new platform
+		checkAddNextPlatform();
+	}
+	private void checkFirstPlatformRemoval(){
+		Platform platform = this.platforms.firstElement();
+		if( isOffScreen( platform ) ){
+			platform.destroy();
+			this.platforms.remove( 0 );
+		}
+	}
+	private void checkAddNextPlatform(){
+		Platform platform = this.platforms.lastElement();
+		if( isOnScreen( platform ) ){
+			this.platforms.add( createRandomPlatform() ); //add a new platform!
+		}
+	}
+	private Platform createRandomPlatform(){
+		return new Platform( this.getRandomX(), this.getRandomY(),
+				this.getRandomWidth(), this.getRandomHeight(),
+				this.runner.speed, this.world );
+	}
+	private float getRandomX(){
+		return gameEngine.getWidth() + random.nextFloat() * MAX_DIST_BETW_PLATFORMS;	
+	}
+	private float getRandomY(){
 		return gameEngine.getHeight() - random.nextFloat() * MAX_DIST_FROM_SCREEN_BOTTOM;
 	}
-
-	public int getRandomWidth()
-	{
+	private int getRandomWidth(){
 		return random.nextInt( MAX_PLATFORM_WIDTH ) + MIN_PLATFORM_WIDTH;
 	}
-
-	protected int getRandomHeight()
-	{
+	private int getRandomHeight(){
 		return random.nextInt( MAX_PLATFORM_HEIGHT ) + MIN_PLATFORM_HEIGHT;
 	}
-
-	private boolean isOffScreen( Platform platform )
-	{
+	private boolean isOffScreen( Platform platform ){
 		if( platform.getLinearVelocity().x < 0
 				&& platform.getX() + platform.getWidth() <= 0 )
 			return true;
@@ -65,9 +84,7 @@ public class PlatformController
 		else
 			return false;
 	}
-
-	private boolean isOnScreen( Platform platform )
-	{
+	private boolean isOnScreen( Platform platform ){
 		if( platform.getLinearVelocity().x < 0
 				&& platform.getX() + platform.getWidth() < gameEngine
 						.getWidth() )
@@ -77,43 +94,4 @@ public class PlatformController
 		else
 			return false;
 	}
-
-	public void update()
-	{
-		checkFirstPlatformRemoval();
-		checkAddNextPlatform();
-	}
-
-	private void createFirstPlatform( World world )
-	{
-		this.platforms.add( new Platform( 0.0f, 200.0f, START_PLATFORM_WIDTH,
-				START_PLATFORM_HEIGHT, this.runner.speed, this.world ) );
-	}
-
-	private Platform createRandomPlatform()
-	{
-		return new Platform( this.getRandomX(), this.getRandomY(),
-				this.getRandomWidth(), this.getRandomHeight(),
-				this.runner.speed, this.world );
-	}
-
-	private void checkFirstPlatformRemoval()
-	{
-		Platform platform = this.platforms.firstElement();
-		if( isOffScreen( platform ) )
-		{
-			platform.destroy();
-			this.platforms.remove( 0 );
-		}
-	}
-
-	private void checkAddNextPlatform()
-	{
-		Platform platform = this.platforms.lastElement();
-		if( isOnScreen( platform ) )
-		{
-			this.platforms.add( createRandomPlatform() );
-		}
-	}
-
 }

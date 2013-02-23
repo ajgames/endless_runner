@@ -38,22 +38,24 @@ public class GameEngine extends SurfaceView implements
 	
 	private World world;
 	private Runner runner;
-	
+	//renderers
 	private Animator animator;
 	private IRenderer renderer;
-
+	//controllers
 	private GravityController gravityController;
 	private PlatformController platformController;
-
+	//the motherdaddy of threads
+	//this is where it's born
 	private MainThread mainThread;
+	//pause button
+	private boolean pause;
 	
-
-	public GameEngine( Context context )
-	{
+	public GameEngine( Context context ){	
 		super( context );
 		newGame();
 	}
 	public void newGame(){
+		pause = false;
 		// adding the callback (this) to the surface holder to intercept events
 		this.getHolder().addCallback( this );
 
@@ -75,22 +77,27 @@ public class GameEngine extends SurfaceView implements
 	}
 	public void update() 
 	{
+		if (pause) return;
+		
 		this.world.step( 1.0f / 60.0f, 6, 2 );
 		this.animator.update();
 		this.gravityController.update();
 		this.platformController.update();
 		this.runner.update();
-		
-		if( this.runner.getY() > getHeight() )
-		{
+
+		//ideally display high score and go back to main menu
+		//but for now just restart the game
+		//how do you break out of game engine????
+		if( this.runner.getY() > getHeight() ){
 			newGame();
+			//displayAlert();
 		}
 	} 
 
 	public void render( Canvas canvas )
 	{
 		this.renderer.render( canvas );
-		this.displayFps( canvas, avgFps );
+		//this.displayFps( canvas, avgFps );
 	}
 	
 	@Override
@@ -103,18 +110,21 @@ public class GameEngine extends SurfaceView implements
 	@Override
 	public void surfaceCreated( SurfaceHolder arg0 )
 	{
+		newGame();
         if(!mainThread.isAlive()){
         	this.mainThread.setRunning( true );
         	this.mainThread.start();
         }
 	}
-
+	
 	@Override
 	public void surfaceDestroyed( SurfaceHolder arg0 )
 	{
 		// tell the thread to shut down and wait for it to finish
 		// this is a clean shutdown
 		boolean retry = true;
+		mainThread.die();
+		/*
 		while( retry )
 		{
 			try
@@ -126,8 +136,8 @@ public class GameEngine extends SurfaceView implements
 			{
 				// try again shutting down the thread
 			}
-		}
-		Log.d( TAG, "Thread was shut down cleanly" );
+		}*/
+		Log.d( TAG, "Surface was destroyed - GameEngine.java" );
 	}
 
 	@Override
@@ -158,21 +168,19 @@ public class GameEngine extends SurfaceView implements
 	}
 	
 	public void stopGame(){
-
 		mainThread.setRunning( false );
 		( (Activity) getContext() ).finish();
-		
 	}
 	
 	public void pauseGame(){
+		mainThread.setRunning( false );
+		pause = true;
 	}
 	public void resumeGame(){
-		//mainThread.setRunning( true );
-
+		mainThread.setRunning( true );
 	}
 	
-	public void setAvgFps( String avgFps )
-	{
+	public void setAvgFps( String avgFps ){
 		this.avgFps = avgFps;
 	}
 
@@ -185,5 +193,4 @@ public class GameEngine extends SurfaceView implements
 			canvas.drawText( fps, this.getWidth() - 50, 20, paint );
 		}
 	}
-	
 }
