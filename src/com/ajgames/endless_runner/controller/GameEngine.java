@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.Log;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import com.ajgames.endless_runner.MainActivity;
 import com.ajgames.endless_runner.MainThread;
+import com.ajgames.endless_runner.PlayGameActivity;
 import com.ajgames.endless_runner.callbacks.MainContactListener;
 import com.ajgames.endless_runner.model.Physics;
 import com.ajgames.endless_runner.model.Runner;
@@ -55,7 +57,7 @@ public class GameEngine extends SurfaceView implements
 		newGame();
 	}
 	public void newGame(){
-		pause = false;
+		//pauseGame();
 		// adding the callback (this) to the surface holder to intercept events
 		this.getHolder().addCallback( this );
 
@@ -162,19 +164,22 @@ public class GameEngine extends SurfaceView implements
 		mainThread.setRunning( false );
 //		mainThread.die();
 		boolean retry = true;
-		while( retry )
+		/*while( retry )
 		{
 			try
 			{
 				if (mainThread != null)
-					mainThread.join(800);
+					mainThread.join();
 			} catch( InterruptedException e )
 			{	// try again shutting down the thread
 			}
 			if (mainThread == null) 
 				retry = true;
-		}
-		( (Activity) getContext() ).finish();
+		}*/
+		mainThread = null;
+		//( (Activity) getContext() ).finish();
+		Intent intent = new Intent(((Activity) getContext()), MainActivity.class);
+		((Activity) getContext()).startActivity( intent );
 	}
 	
 	public void pauseGame(){
@@ -183,6 +188,7 @@ public class GameEngine extends SurfaceView implements
 	}
 	public void resumeGame(){
 		mainThread.setRunning( true );
+		pause = false;
 	}
 	
 	public void setAvgFps( String avgFps ){

@@ -62,6 +62,7 @@ public class MainThread extends Thread
 
 		Log.d( TAG, "Starting game loop" );
 
+		
 		while( running )
 		{
 			canvas = null;

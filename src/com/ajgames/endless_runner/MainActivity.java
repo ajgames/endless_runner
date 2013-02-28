@@ -34,15 +34,14 @@ public class MainActivity extends Activity
 	@Override
 	public void onResume() {
 	    super.onResume(); 
-		displayAlert();
-		
-        Log.d(TAG, "onResume screen state : "
-                 +String.valueOf(this.hasWindowFocus()));
+
 		Log.d( TAG, "Resuming.." );
 	}   
 	@Override
 	public void onStart() {
 	    super.onStart(); 
+        Log.d(TAG, "onResume screen state : "
+                +String.valueOf(this.hasWindowFocus()));
 		Log.d( TAG, "Starting.." );
 	}
 	@Override
